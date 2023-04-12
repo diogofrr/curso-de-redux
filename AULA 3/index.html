@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./redux.min.js"></script>
+    <script src="./immer.umd.production.min.js"></script>
+</head>
+<body>
+    <script>
+        const initialState = {
+            nome: "Diogo",
+            idade: 19
+        }
+        
+        const MUDAR_NOME = 'MUDAR_NOME';
+        const MUDAR_IDADE = 'MUDAR_IDADE';
+
+        function mudarNome(payload){
+            return {
+                type: MUDAR_NOME,
+                payload
+            }
+        }
+
+        function mudarIdade(payload){
+            return {
+                type: MUDAR_IDADE,
+                payload
+            }
+        }
+
+        const reducer = immer.produce((state, action) => {
+            switch (action.type) {
+                case MUDAR_NOME:
+                    state.nome = action.payload;
+                    break;
+                case MUDAR_IDADE:
+                    state.idade = action.payload;
+                    break;
+            }
+        }, initialState);
+
+        const store = Redux.createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+       
+        store.dispatch(mudarNome("Isabelle A."));
+        store.dispatch(mudarIdade(21));
+        store.dispatch(mudarNome("Isabelle M."));
+        store.dispatch(mudarIdade(18));
+        store.dispatch(mudarNome("Aisha"));
+        store.dispatch(mudarIdade(19));
+    </script>
+</body>
+</html>

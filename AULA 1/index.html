@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./redux.min.js"></script>
+    <title>Redux #1</title>
+</head>
+<body>
+    <div>
+        <h1>Total: <span id="total"></span> </h1>
+    </div>
+    <button id="button">Incrementar</button>
+    <button id="abrir">[]</button>
+    <button id="fechar">X</button>
+    <script>
+        "use strict";
+
+        const INCREMENTAR = 'INCREMENTAR';
+        const SOMAR = 'SOMAR';
+
+        const ABRIR = 'ABRIR';
+        const FECHAR = 'FECHAR';
+
+        const total = document.getElementById("total");
+
+        function incrementar(){
+            return { type: INCREMENTAR };
+        }
+
+        function somar(){
+            return { type: SOMAR }
+        }
+
+        function abrirM(){
+            return { type: ABRIR, payload: true}
+        }
+
+        function fecharM(){
+            return { type: FECHAR, payload: false}
+        }
+        
+        const contador = (state = 0, action) => {
+            switch(action.type){
+                case INCREMENTAR:
+                    return state + 1;
+                case SOMAR:
+                    return state + action.payload;
+                default:
+                    return state;
+            }
+        };
+
+        const modal = (state = false, action) => {
+            switch (action.type) {
+                case ABRIR:
+                    return true;
+                case FECHAR: 
+                    return false;
+                default:
+                    return state;
+            }
+        }
+        
+        const reducer = Redux.combineReducers({ contador, modal });
+        const store = Redux.createStore(reducer);
+
+        function render() {
+            const { contador, modal } = store.getState();
+            console.log(contador);
+            total.innerText = contador;
+
+            if(modal) {
+                total.style.color = "green";
+            } else {
+                total.style.color = "red";
+            }
+        }
+        render();
+        
+        const unsubscribe = store.subscribe(render);
+
+        // store.dispatch(somar());
+        // store.dispatch(incrementar());
+
+        // actualState = store.getState();
+        // console.log(actualState);
+
+        
+        // const unsubscribe2 = store.subscribe(() => {
+        //     console.log('Aconteceu')
+        // });
+        // unsubscribe2();
+
+        const button = document.getElementById("button");
+        const abrir = document.getElementById("abrir");
+        const fechar = document.getElementById("fechar");
+        button.addEventListener('click', () => store.dispatch(incrementar()));
+        abrir.addEventListener('click', () => store.dispatch(abrirM()));
+        fechar.addEventListener('click', () => store.dispatch(fecharM()));
+    </script>
+</body>
+</html>

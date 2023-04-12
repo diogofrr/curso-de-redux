@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./redux.min.js"></script>
+    <script src="./immer.umd.production.min.js"></script>
+    <title>DESAFIO 1</title>
+</head>
+<body>
+    <p>
+        Nome: <span id="nome"></span>
+    </p>
+    <p>
+        Email: <span id="email"></span>
+    </p>
+    <p>
+        Tempo Restante: <span id="tempo-restante"></span>
+    </p>
+    <button id="acrescentar">+</button>
+    <button id="reduzir">-</button>
+    <p>
+        Total de Aulas Completas: <span id="total-aulas"></span>
+    </p>
+    <button id="resetar">Resetar</button>
+    <button id="completar">Completar Curso</button>
+    <br>
+    <input type="number" id="id-aula"><button id="completar-aula">Completar Aula</button>
+
+    <script type="module">
+        import store from './configureStore.js';
+        import { modificarEmail, reduzirTempo, incrementarTempo } from './reducers/aluno.js';
+        import { completarAula, completarCurso, resetarCurso } from './reducers/aulas.js';
+
+        const nome = document.getElementById("nome");
+        const email = document.getElementById("email");
+        const tempoRestante = document.getElementById("tempo-restante");
+        const totalAulas = document.getElementById("total-aulas");
+
+        const acrescentar = document.getElementById("acrescentar");
+        const reduzir = document.getElementById("reduzir");
+
+        const resetar = document.getElementById("resetar");
+        const completar = document.getElementById("completar");
+
+        const idAula = Number(document.getElementById("id-aula").value);
+        const concluirAula = document.getElementById("completar-aula");
+
+        function render() {
+            const { aulas, aluno } = store.getState();
+
+            nome.innerText = aluno.nome;
+            email.innerText = aluno.email;
+            tempoRestante.innerText = aluno.tempo;
+            totalAulas.innerText = aulas.curso.todasAulas.filter(aula => aula.aulaCompleta).length;
+        }
+        render()
+
+        store.subscribe(render);
+        
+        store.dispatch(modificarEmail('ddiog20@gmail.com'));
+
+        acrescentar.addEventListener('click', () => store.dispatch(incrementarTempo()));
+        reduzir.addEventListener('click', () => store.dispatch(reduzirTempo()));
+        resetar.addEventListener('click', () => store.dispatch(resetarCurso()));
+        completar.addEventListener('click', () => store.dispatch(completarCurso()));
+        concluirAula.addEventListener('click', () => store.dispatch(completarAula(idAula)));
+    </script>
+</body>
+</html>
