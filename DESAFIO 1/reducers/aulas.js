@@ -40,19 +40,20 @@ const initialState = {
 const reducer = immer.produce((state, action) => {
     switch (action.type) {
         case COMPLETAR_AULA:
-            state.curso.todasAulas.forEach(aula => {
-                if(aula.id === action.payload){
-                    return aula.aulaCompleta = true;
-                }
-            });
+            const index  = state.curso.todasAulas.findIndex((aula) => aula.id === action.payload);
+
+            if(!isNaN(index) && state.curso.todasAulas[index]) state.curso.todasAulas[index].aulaCompleta = true;
+
             break;
+
         case COMPLETAR_CURSO:
             state.curso.cursoCompleto = true;
-            state.curso.todasAulas.map(aula => aula.aulaCompleta = true);
+            state.curso.todasAulas.forEach(aula => aula.aulaCompleta = true);
             break;
+            
         case RESETAR_CURSO:
             state.curso.cursoCompleto = false;
-            state.curso.todasAulas.map(aula => aula.aulaCompleta = false);
+            state.curso.todasAulas.forEach(aula => aula.aulaCompleta = false);
             break;
     }
 }, initialState);

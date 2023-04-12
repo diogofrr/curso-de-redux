@@ -44,7 +44,6 @@
         const resetar = document.getElementById("resetar");
         const completar = document.getElementById("completar");
 
-        const idAula = Number(document.getElementById("id-aula").value);
         const concluirAula = document.getElementById("completar-aula");
 
         function render() {
@@ -65,7 +64,10 @@
         reduzir.addEventListener('click', () => store.dispatch(reduzirTempo()));
         resetar.addEventListener('click', () => store.dispatch(resetarCurso()));
         completar.addEventListener('click', () => store.dispatch(completarCurso()));
-        concluirAula.addEventListener('click', () => store.dispatch(completarAula(idAula)));
+        concluirAula.addEventListener('click', () => {
+            const idAula = Number(document.getElementById("id-aula").value);
+            store.dispatch(completarAula(idAula))
+        });
     </script>
 </body>
 </html>
