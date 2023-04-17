@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 /**
  * Cria um slice com uma função assíncrona de fetch
  * 
@@ -33,7 +32,7 @@ const createAsyncSlice = (config) => {
             fetchError(state, action){
                 state.loading = false;
                 state.data = null;
-                state.error = action.error;
+                state.error = action.payload;
             },
             ...config.reducers,
         }
@@ -47,7 +46,10 @@ const createAsyncSlice = (config) => {
             const { url, options } = config.fetchConfig(payload);
 
             const response = await fetch(url, options);
-            const data = await response.json();
+            const data = await response.json()
+                .then((data) => {
+                    if(data?.token === undefined) throw data;
+                });
             
             return dispatch(fetchSuccess(data));
         } catch (error) {

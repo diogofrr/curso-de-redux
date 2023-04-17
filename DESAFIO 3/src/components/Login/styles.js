@@ -44,6 +44,10 @@ export const LogoutBtn = styled.button`
     border-radius: 50%;
     display: inline-block;
     content: "";
+
+    &:hover{
+        background-color: black;
+    }
 `;
 
 export const LoginBtn = styled.button`
