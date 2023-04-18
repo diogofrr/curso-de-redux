@@ -8,10 +8,14 @@
         "AULA 6 e 7": true,
         "DESAFIO 1": true,
         "DESAFIO 2": true,
+        "aula-1-rr": true,
         "aula-1-rr/node_modules": true,
         "aula-1-rr/public": true,
         "aula-1-rr/.gitignore": true,
         "aula-1-rr/package.json": true,
         "aula-1-rr/package-lock.json": true
-    }
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      }
 }

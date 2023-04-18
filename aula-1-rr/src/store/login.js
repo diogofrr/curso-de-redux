@@ -1,7 +1,7 @@
 //import { createSlice } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 import createAsyncSlice from './helper/createAsyncSlice';
-import { getLocalStorage } from './helper/localStorage';
+import getLocalStorage from './helper/getLocalStorage';
 
 const token = createAsyncSlice({
     name: 'token',

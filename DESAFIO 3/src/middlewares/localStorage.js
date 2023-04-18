@@ -1,13 +1,13 @@
-const localStorage = (store) =>  (next) => (action) => {
-    const response = next(action);
-    const { meta } = action;
+const localStorage = (store) => (next) => (action) => {
+  const response = next(action);
+  const {meta} = action;
 
-    if(meta && meta.localStorage){
-        const { key, value } = meta.localStorage;
-        window.localStorage.setItem(key, JSON.stringify(value));
-    }
+  if (meta && meta.localStorage) {
+    const {key, value} = meta.localStorage;
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }
 
-    return response;
-}
+  return response;
+};
 
 export default localStorage;
