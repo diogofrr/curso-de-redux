@@ -8,6 +8,7 @@ import {FormControl} from '../Form/FormControl';
 import {Input} from '../Form/Input';
 import {Label} from '../Form/Label';
 import {LoginBtn} from '../Form/LoginBtn';
+import {Error} from '../UI/Error';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -24,6 +25,7 @@ const Login = () => {
 
     dispatch(login({username, password}));
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormControl>
@@ -33,15 +35,25 @@ const Login = () => {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
-        <span>Error</span>
+        {
+          !username &&
+          <Error>Este campo é obrigatário</Error>
+        }
       </FormControl>
       <FormControl>
         <Label htmlFor="current-password">Senha</Label>
         <Input
-          id="password"
-          type="current-password"
-          value={password} onChange={(e) => setPassword(e.target.value)} />
+          id="current-password"
+          type="password"
+          value={password} onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        {
+          !password &&
+          <Error>Este campo é obrigatário</Error>
+        }
       </FormControl>
       <LoginBtn>Entrar</LoginBtn>
     </Form>
