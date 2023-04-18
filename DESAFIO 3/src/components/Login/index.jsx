@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormControl, Input, Label, LoginBtn, LogoutBtn, Title, FormHeader, Div } from './styles';
 import { autoLogin, login } from '../../store/reducers/login';
 
@@ -15,8 +15,7 @@ const Login = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(login({username, password}))
+    dispatch(login({username, password}));;
   }
 
   return (
